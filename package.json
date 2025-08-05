@@ -1,0 +1,22 @@
+{
+  "name": "jokesapi",
+  "version": "1.0.0",
+  "description": "This is a RESTFUL JokesApi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "JokesAPI",
+    "jokes",
+    "api",
+    "shauryaverma1005",
+    "apiPractise"
+  ],
+  "author": "Shaurya Kundan",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "prettier": "^3.6.2"
+  }
+}
