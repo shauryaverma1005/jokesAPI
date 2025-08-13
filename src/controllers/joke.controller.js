@@ -41,7 +41,6 @@ const createNewJoke = asyncHandler (async (req, res) => {
 })
 
 //delete a joke
-
 const deleteJoke = asyncHandler( async (req, res) => {
     const {jokeId} = req.body;
     const findJoke = await Joke.findOne({_id : jokeId});
@@ -54,4 +53,33 @@ const deleteJoke = asyncHandler( async (req, res) => {
     })
 })
 
-export { getAllJokes, createNewJoke, deleteJoke};
+//update a joke
+const updateJoke = asyncHandler(async (req, res) => {
+    const { jokeId, category, update } = req.body;
+
+    // Check if the joke exists
+    const previousJoke = await Joke.findById(jokeId);
+    if (!previousJoke) {
+        return res.status(404).json({
+            success: false,
+            message: "Joke not found"
+        });
+    }
+
+    console.log(`Previous joke: ${previousJoke}`);
+
+    // Update & get updated joke
+    const updatedJoke = await Joke.findByIdAndUpdate(
+        jokeId,
+        { $set: { jokeCategory: category, joke: update } },
+        { new: true, runValidators: true }
+    );
+
+    res.status(202).json({
+        success: true,
+        message: "Joke updated successfully",
+        data: updatedJoke
+    });
+});
+
+export { getAllJokes, createNewJoke, deleteJoke, updateJoke};
