@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const jokeSchema = mongoose.Schema({
     jokeCategory : {
         type: String,
-        enum : ["adults", "normal"],
+        enum : ["adult", "normal"],
         required: true,
         trim: true,
         lowercase: true
@@ -11,9 +11,9 @@ const jokeSchema = mongoose.Schema({
     joke: {
         type: String,
         required: true,
-        unique: true,
         trim: true,
-        lowercase: true
+        lowercase: true,
+        unique: true
     }
 });
 
