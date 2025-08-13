@@ -1,10 +1,18 @@
 import { Joke } from "../models/joke.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 
-const getAllJokes = (req, res) => {
-    res.send("hello world");
-};
 
+// Get All Jokes
+const getAllJokes = asyncHandler(async (req, res) => {
+    const allJokes = await Joke.find({});
+    console.log(allJokes);
+    res.status(200).json({
+        allJokes
+    })
+});
+
+
+// Create new jokes
 const createNewJoke = asyncHandler (async (req, res) => {
     try {
         const { jokeCategory, joke } = req.body;
@@ -16,8 +24,8 @@ const createNewJoke = asyncHandler (async (req, res) => {
         console.log(newJoke);
         const id = newJoke._id;
         const createdJoke = await Joke.findOne({_id: id})
-        res.status(200).json({
-            statusCode: 200,
+        res.status(201).json({
+            statusCode: 201,
             success: true,
             message: "New joke added successfully",
             data : createdJoke
@@ -32,4 +40,18 @@ const createNewJoke = asyncHandler (async (req, res) => {
     }
 })
 
-export { getAllJokes, createNewJoke };
+//delete a joke
+
+const deleteJoke = asyncHandler( async (req, res) => {
+    const {jokeId} = req.body;
+    const findJoke = await Joke.findOne({_id : jokeId});
+    console.log(`jokeId : ${jokeId}, joke Data : ${findJoke}`)
+    const deleted = await Joke.deleteOne({_id: jokeId});
+    res.status(200).json({
+        statusCode: 200,
+        message: "Joke deleted successfully!!",
+        data: deleted
+    })
+})
+
+export { getAllJokes, createNewJoke, deleteJoke};
